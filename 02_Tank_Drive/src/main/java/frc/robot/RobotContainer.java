@@ -9,22 +9,9 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj2.command.Command;
-// import CommandXboxController class
-import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-// import the subsystems
-import frc.robot.subsystems.IntakeMotor;
-import frc.robot.subsystems.ShooterMotor;
-
-// import the commands
-import frc.robot.commands.IntakeState;
 
 
 public class RobotContainer {
-
-  // define xbox controller
-  private final CommandXboxController m_controller = new CommandXboxController(Constants.DriverControllerConstants.DRIVER_CONTROLLER_PORT);
-  // define intake subsystem
-  private final IntakeMotor m_intakeMotor = new IntakeMotor();
 
   /**
    * Constructor — runs ONCE when the robot program first starts.
@@ -34,18 +21,13 @@ public class RobotContainer {
    */
   public RobotContainer() {
     configureButtonBindings();
-
   }
 
   /**
    * This is where you map controller buttons to commands.
    * Each line inside here says: "when the driver presses THIS button, run THAT command."
    */
-  private void configureButtonBindings() {
-
-    // While A is held, run the intake motor. When released, it stops automatically.
-    m_controller.a().whileTrue(new IntakeState(m_intakeMotor));
-  }
+  private void configureButtonBindings() {}
 
   /**
    * Returns the command the robot should run during the Autonomous period.
