@@ -171,9 +171,9 @@ Phoenix 6 API but drive the XRP hardware underneath. **Prefer them over raw `XRP
 - Motors: `frc.robot.ctre.hardware.TalonFX` (wraps `XRPMotor` + the wheel encoder)
 - Encoders: `frc.robot.ctre.hardware.CANcoder` (wraps the wheel `Encoder`)
 - IMU: `frc.robot.ctre.hardware.Pigeon2` (wraps `XRPGyro`)
-- Supporting types mirror Phoenix 6 exactly: `controls.{DutyCycleOut, VoltageOut, NeutralOut}`,
-  `configs.{TalonFXConfiguration, CANcoderConfiguration, ...}`, `signals.{NeutralModeValue,
-  InvertedValue, SensorDirectionValue}`, and `StatusSignal` / `StatusCode`.
+- Supporting types mirror Phoenix 6 exactly: `controls.{DutyCycleOut, NeutralOut}`,
+  `configs.{TalonFXConfiguration, CANcoderConfiguration, ...}`, `signals.{InvertedValue,
+  SensorDirectionValue}`, and `StatusSignal` / `StatusCode`.
 
 **Right-motor inversion is done the CTRE way** — apply a `TalonFXConfiguration` with
 `MotorOutput.Inverted = InvertedValue.Clockwise_Positive` via `motor.getConfigurator().apply(...)`,
@@ -185,7 +185,7 @@ gyro). Configure IDs in `Constants.DriveConstants`.
 
 **Season transition:** install the CTRE Phoenix 6 vendordep and find/replace `frc.robot.ctre` →
 `com.ctre.phoenix6` in imports — class/method/field/enum names all match, so nothing else changes.
-The wrapper is intentionally honest about XRP limits (brake mode coasts, voltage is approximate,
-spare motors have no encoder). Full details in `src/main/java/frc/robot/ctre/README.md`.
+The wrapper exposes only Phoenix 6 features the XRP can actually do, with one honest limit:
+spare motors have no encoder. Full details in `src/main/java/frc/robot/ctre/README.md`.
 
 

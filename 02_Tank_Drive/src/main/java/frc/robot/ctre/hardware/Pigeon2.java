@@ -111,10 +111,4 @@ public class Pigeon2 {
   public void setYaw(double yawDegrees) {
     m_yawOffset = yawDegrees - m_gyro.getAngleZ();
   }
-
-  /** Resets the heading so that the current direction becomes zero degrees. */
-  public void reset() {
-    m_gyro.reset();
-    m_yawOffset = 0;
-  }
 }

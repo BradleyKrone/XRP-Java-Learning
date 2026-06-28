@@ -9,11 +9,10 @@ package frc.robot.ctre.controls;
  *
  * <pre>
  *   motor.setControl(new DutyCycleOut(0.5));   // run at 50% power
- *   motor.setControl(new VoltageOut(6.0));     // run at 6 volts
  *   motor.setControl(new NeutralOut());        // stop
  * </pre>
  *
  * <p>This interface is just a common type so that {@code setControl(...)} can accept any kind of
- * request. The known kinds are {@link DutyCycleOut}, {@link VoltageOut}, and {@link NeutralOut}.
+ * request. The known kinds are {@link DutyCycleOut} and {@link NeutralOut}.
  */
 public interface ControlRequest {}

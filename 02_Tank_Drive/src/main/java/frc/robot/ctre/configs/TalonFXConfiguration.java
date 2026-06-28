@@ -5,8 +5,8 @@ package frc.robot.ctre.configs;
  *
  * <p>This mirrors CTRE Phoenix 6's {@code com.ctre.phoenix6.configs.TalonFXConfiguration}. On a
  * real robot this holds many groups of settings (current limits, PID gains, and more). This
- * teaching wrapper includes the group you need first: {@link #MotorOutput} (direction and neutral
- * mode). More groups can be added later in the same style.
+ * teaching wrapper includes the group you need first: {@link #MotorOutput} (direction). More groups
+ * can be added later in the same style.
  *
  * <p>Typical use:
  *
@@ -17,6 +17,6 @@ package frc.robot.ctre.configs;
  * </pre>
  */
 public class TalonFXConfiguration {
-  /** Direction and neutral-mode settings for the motor. */
+  /** Direction settings for the motor. */
   public MotorOutputConfigs MotorOutput = new MotorOutputConfigs();
 }

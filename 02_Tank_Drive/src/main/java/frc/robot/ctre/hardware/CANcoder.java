@@ -72,24 +72,6 @@ public class CANcoder {
   }
 
   /**
-   * The position within a single turn, in rotations from 0.0 up to (but not including) 1.0.
-   *
-   * <p>A real CANcoder knows its absolute angle even after a reboot; the XRP encoder cannot, so this
-   * is simply the total rotation wrapped into one turn.
-   *
-   * @return a live signal carrying the within-one-turn position in rotations
-   */
-  public StatusSignal<Angle> getAbsolutePosition() {
-    return new StatusSignal<>(
-        "AbsolutePosition",
-        () -> {
-          double rotations = m_encoder.getDistance() + m_positionOffset;
-          return rotations - Math.floor(rotations); // wrap into [0.0, 1.0)
-        },
-        Units.Rotations::of);
-  }
-
-  /**
    * The rotation speed, in rotations per second.
    *
    * @return a live signal carrying the velocity in rotations per second

@@ -1,14 +1,11 @@
 package frc.robot.ctre.hardware;
 
 import static edu.wpi.first.units.Units.RotationsPerSecond;
-import static edu.wpi.first.units.Units.Volts;
 
 import edu.wpi.first.units.Units;
 import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.AngularVelocity;
-import edu.wpi.first.units.measure.Voltage;
 import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.xrp.XRPMotor;
 import frc.robot.ctre.StatusSignal;
 import frc.robot.ctre.configs.TalonFXConfiguration;
@@ -16,9 +13,7 @@ import frc.robot.ctre.configs.TalonFXConfigurator;
 import frc.robot.ctre.controls.ControlRequest;
 import frc.robot.ctre.controls.DutyCycleOut;
 import frc.robot.ctre.controls.NeutralOut;
-import frc.robot.ctre.controls.VoltageOut;
 import frc.robot.ctre.signals.InvertedValue;
-import frc.robot.ctre.signals.NeutralModeValue;
 
 /**
  * A CTRE-style motor controller that secretly drives an XRP motor.
@@ -57,9 +52,6 @@ public class TalonFX {
    */
   private double m_positionOffset;
 
-  /** Remembered coast/brake choice (has no real effect on XRP motors, which always coast). */
-  private NeutralModeValue m_neutralMode = NeutralModeValue.Coast;
-
   /**
    * Creates a motor controller for the given device ID.
    *
@@ -97,17 +89,13 @@ public class TalonFX {
   /**
    * Runs the motor according to a control request — the Phoenix 6 way to command a motor.
    *
-   * <p>Supported requests: {@link DutyCycleOut}, {@link VoltageOut}, and {@link NeutralOut}.
+   * <p>Supported requests: {@link DutyCycleOut} and {@link NeutralOut}.
    *
    * @param request the control request describing how to run the motor
    */
   public void setControl(ControlRequest request) {
     if (request instanceof DutyCycleOut dutyCycle) {
       m_motor.set(dutyCycle.Output);
-    } else if (request instanceof VoltageOut voltage) {
-      // XRP motors only take a percent, so convert volts -> percent using the live battery voltage.
-      double batteryVoltage = RobotController.getBatteryVoltage();
-      m_motor.set(batteryVoltage > 0 ? voltage.Output / batteryVoltage : 0.0);
     } else if (request instanceof NeutralOut) {
       m_motor.set(0.0);
     } else {
@@ -120,17 +108,6 @@ public class TalonFX {
   /** Stops the motor. */
   public void stopMotor() {
     m_motor.set(0.0);
-  }
-
-  /**
-   * Sets whether the motor coasts or brakes when stopped.
-   *
-   * <p>Remembered for fidelity with the real robot, but XRP motors always coast.
-   *
-   * @param neutralMode coast or brake
-   */
-  public void setNeutralMode(NeutralModeValue neutralMode) {
-    m_neutralMode = neutralMode;
   }
 
   /**
@@ -171,18 +148,6 @@ public class TalonFX {
   }
 
   /**
-   * The voltage currently being applied to the motor.
-   *
-   * <p>Estimated as (percent output) x (battery voltage), since XRP motors do not report voltage.
-   *
-   * @return a live signal carrying the motor voltage in volts
-   */
-  public StatusSignal<Voltage> getMotorVoltage() {
-    return new StatusSignal<>(
-        "MotorVoltage", () -> m_motor.get() * RobotController.getBatteryVoltage(), Volts::of);
-  }
-
-  /**
    * Tells the motor that its current position should be treated as the given value (in rotations).
    * Useful for "zeroing" before a move.
    *
@@ -197,6 +162,5 @@ public class TalonFX {
   /** Applies a {@link TalonFXConfiguration} to the underlying XRP motor. */
   private void applyConfiguration(TalonFXConfiguration config) {
     m_motor.setInverted(config.MotorOutput.Inverted == InvertedValue.Clockwise_Positive);
-    m_neutralMode = config.MotorOutput.NeutralMode;
   }
 }

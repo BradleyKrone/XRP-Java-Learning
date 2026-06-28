@@ -56,9 +56,9 @@ was chosen to match Phoenix 6 exactly, so the body of your robot code does not c
 | This wrapper | Real Phoenix 6 |
 |---|---|
 | `frc.robot.ctre.hardware.TalonFX` / `CANcoder` / `Pigeon2` | `com.ctre.phoenix6.hardware.*` |
-| `frc.robot.ctre.controls.DutyCycleOut` / `VoltageOut` / `NeutralOut` | `com.ctre.phoenix6.controls.*` |
+| `frc.robot.ctre.controls.DutyCycleOut` / `NeutralOut` | `com.ctre.phoenix6.controls.*` |
 | `frc.robot.ctre.configs.TalonFXConfiguration` (etc.) | `com.ctre.phoenix6.configs.*` |
-| `frc.robot.ctre.signals.NeutralModeValue` (etc.) | `com.ctre.phoenix6.signals.*` |
+| `frc.robot.ctre.signals.InvertedValue` / `SensorDirectionValue` | `com.ctre.phoenix6.signals.*` |
 | `frc.robot.ctre.StatusSignal` / `StatusCode` | `com.ctre.phoenix6.*` |
 
 ## How device IDs map to XRP hardware
@@ -82,18 +82,10 @@ Using an ID outside these ranges throws a clear error explaining the valid choic
 
 ## Honest differences from real hardware
 
-The XRP is simpler than competition hardware, so a few things are approximations. They
-are intentional and documented so nothing is a surprise:
+The XRP is simpler than competition hardware. This wrapper deliberately exposes only the
+Phoenix 6 features the XRP can actually do, so nothing you learn here is a fake. The one
+hardware limitation worth calling out:
 
-- **Brake mode does nothing.** XRP motors have no brake circuit, so
-  `NeutralModeValue.Brake` is remembered but the motor still coasts. On a real Kraken it
-  truly brakes.
-- **Voltage control is approximate.** `VoltageOut` / `getMotorVoltage()` convert between
-  volts and percent power using the live battery voltage, because XRP motors only
-  understand percent. A real Kraken does true voltage control.
-- **Absolute position is not truly absolute.** A real CANcoder remembers its angle across
-  reboots; the XRP encoder cannot, so `getAbsolutePosition()` is just the total rotation
-  wrapped into one turn.
 - **Spare motors have no encoder.** IDs 2 and 3 are bare motor ports, so their
   `getPosition()` / `getVelocity()` always read 0.
 
