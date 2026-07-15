@@ -17,31 +17,10 @@ package frc.robot;
 
 
 public final class Constants {
-///////////////////////////////////// Driver Controller Constants ///////////////////////////////////
-// Driver Controller constants
+
+  /** Settings for the driver's controller. */
   public static final class DriverControllerConstants {
-    // Driver controller port
+    /** USB port the driver's controller is plugged into (shown in the Driver Station). */
     public static final int DRIVER_CONTROLLER_PORT = 0;
   }
-
-/////////////////////////////////// Shooter Motor Constatnts ///////////////////////////////////
-// Shooter constants
-public static final class ShooterConstants {
-  // Shooter motor id
-  public static final int SHOOTER_MOTOR_ID = 2;
-
-  // Shooter motor speed
-  public static final double SHOOTER_MOTOR_SPEED = 0.75;
-}
-
-
-/////////////////////////////////// Intake Motor Constants ///////////////////////////////////
-// Intake constants
-public static final class IntakeConstants {
-// Intake motor id
-public static final int INTAKE_MOTOR_ID = 1;
-
-// intake motor speed
-public static final double INTAKE_MOTOR_SPEED = 0.5;
-}
 }

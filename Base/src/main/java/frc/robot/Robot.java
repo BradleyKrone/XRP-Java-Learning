@@ -93,6 +93,11 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+
+    // Start IMU bias calibration. The robot must stay still for 3 seconds.
+    // Calibration removes the gyro's zero-rate drift so the heading stays
+    // accurate while driving straight.
+    m_robotContainer.startCalibration();
   }
 
   /** This function is called periodically during operator control. */
